@@ -24,9 +24,8 @@ public class Player {
 	{
 		return playerGuess;
 	}
-	
-	//Under construction
-	public double setTotal(double totalb)
+
+	public double setTotal(double total)
 	{
 		return total;
 	}

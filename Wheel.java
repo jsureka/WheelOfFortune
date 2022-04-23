@@ -7,13 +7,25 @@ public class Wheel
 	
 	public void spin()
 	{
-		rando = new Random();
-		wheelSpot = rando.nextInt(9)+1;
-		wheelValue = wheelValue(wheelSpot);
+		setWheelSpot();
+		setWheelValue();
+		displayWheelValue();
+	}
+
+	private void displayWheelValue() {
 		System.out.println("You landed on $" + wheelValue );
 		System.out.println();
 	}
-	
+
+	private void setWheelValue() {
+		wheelValue = wheelValue(wheelSpot);
+	}
+
+	private void setWheelSpot() {
+		rando = new Random();
+		wheelSpot = rando.nextInt(9)+1;
+	}
+
 	private double wheelValue(int spot)
 	{
 		double [] wheelValues = {100.0, 300.0, 500.0, 700.0, 900.0,
@@ -21,10 +33,10 @@ public class Wheel
 		
 		return wheelValues[spot];
 	}
-	
+
 	public double getWheelValue()
 	{
 		return wheelValue;
 	}
-	
+
 }

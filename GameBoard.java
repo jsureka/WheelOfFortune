@@ -6,16 +6,7 @@ public class GameBoard {
 	private StringBuilder pendingPuzzle;
 	private String category;
 	private char character;
-	
-	/**
-	 * This constructor initializes a new game board with the letters available to the players
-	 * at the start of the game, the puzzle to be guessed by the players, and the category pertaining
-	 * to the puzzle. Constructor sets the initial value of the character currently on the board to 
-	 * a blank character
-	 * @param letters Letters made available to players at the start of the game
-	 * @param puzzle Puzzle to be solved by players
-	 * @param category Category pertaining to puzzle
-	 */
+
 	public GameBoard (String letters, String puzzle, String category)
 	{
 		
@@ -41,58 +32,49 @@ public class GameBoard {
 	
 	public void updateAvailableLetters()
 	{
-		
-		int index = availableLetters.toString().toLowerCase().indexOf(Character.toLowerCase(character));
-		
-		availableLetters.setCharAt(index, ' ');
+		availableLetters.setCharAt(getIndex(character), ' ');
 	}
-	
+
+	private int getIndex(char character) {
+		return availableLetters.toString().toLowerCase().indexOf(Character.toLowerCase(character));
+
+	}
+
 	public void displayLetters()
 	{
 		System.out.println("Available letters - " + availableLetters);
 		System.out.println();
 	}
 	
-	/**
-	 * This method checks whether the player's letter guess was previously guessed.
-	 * Returns true if it was previously guessed and false otherwise.
-	 * @param letterGuess The letter currently on the board (The letter being played)
-	 * @return Whether or not the current letter was previously guessed
-	 */
+
 	public boolean isLetterGuessed(char letterGuess)
 	{
-		
-		if ((availableLetters.toString().toLowerCase().indexOf(Character.toLowerCase(letterGuess)))==-1)
-				return true;
-		else
-			return false;
-		
+		return getIndex(letterGuess) == -1;
 	}
-	
+
 	public boolean isLetterInPuzzle(char letterGuess)
 	{
 		
 		boolean status = false;
-		
-		for (int i=0; i<PUZZLE.length();i++)
-		{
-			if (Character.toLowerCase(character) == Character.toLowerCase(PUZZLE.charAt(i)))
-			{
+
+		for (int index=0; index<PUZZLE.length();index++)
+			if (isInPuzzle(letterGuess, index)) {
 				status = true;
 				break;
-			}
-			else
+			} else
 				status = false;
-			
-					
-		}
 		return status;
 	}
+
+	private boolean isInPuzzle(char letterGuess, int index) {
+		return Character.toLowerCase(letterGuess) == Character.toLowerCase(PUZZLE.charAt(index));
+	}
+
 	public void updatePuzzle()
 	{
 		for (int i=0; i<PUZZLE.length();i++)
 		{
-			if (Character.toLowerCase(character) == Character.toLowerCase(PUZZLE.charAt(i)))
+			if (isInPuzzle(character, i))
 			pendingPuzzle.setCharAt(i, PUZZLE.charAt(i));
 					
 		}
